@@ -1,12 +1,26 @@
 import 'dart:io';
+
+import 'package:shelf/shelf.dart';
+import 'package:shelf/shelf_io.dart';
+import 'package:shelf_router/shelf_router.dart';
+
+// ignore: constant_identifier_names
+const int PORT = 8000;
+// ignore: constant_identifier_names
+const String HOST = "localhost";
+bool isServerOpened = false;
+
 void main(List<String> arguments) async {
-  final server = await HttpServer.bind('localhost',8000);
-  server.listen((request) {
-    final response = request.response;
-    response.statusCode = HttpStatus.ok;
-    response.headers.add('Content-Type', 'text/html');
-    response.write('<h1>Hello, world</h1>');
-    response.close();
+  final router = Router();
+
+  final file = File('bin/frontend/index.html');
+  final fileData = await file.readAsString();
+
+  router.get('/',(Request request){
+    return Response.ok(fileData,headers:{'Content-Type':"text/html; charset=utf-8"});
   });
-  print('Server running at http://localhost:8000');
+
+  final server = await serve(router.call,HOST,PORT);
+  print("Server running at http://${server.address.host}:${server.port}");
+
 }

@@ -20,13 +20,12 @@ void main(List<String> arguments) async {
   final file = File('bin/frontend/index.html');
   final fileData = await file.readAsString();
 
-  router.get('/',(Request request){
-    return Response.ok(fileData,headers:{'Content-Type':"text/html; charset=utf-8"});
-  });
+  // router.get('/',(Request request){
+  //   return Response.ok(fileData,headers:{'Content-Type':"text/html; charset=utf-8"});
+  // });
+  WelcomeController.regist("/", router);
 
   final server = await serve(router.call,HOST,PORT);
-
-  WelcomeController("/");
 
   print("Server running at http://${server.address.host}:${server.port}");
 

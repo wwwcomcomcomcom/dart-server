@@ -1,3 +1,5 @@
+import "dart:io";
+
 import "package:dart_server/controller.dart";
 import "package:html/parser.dart";
 import "package:shelf/shelf.dart";
@@ -12,7 +14,11 @@ class WelcomeController extends Controller {
   WelcomeController.regist(super.url, super.router) : super.regist();
   @override
   Response get(Request request){
-    var component = parse("<h1>template?<h1>",encoding: "UTF-8");
-    return Response.ok("Hello ${component.outerHtml}");
+    
+    final file = File('bin/frontend/index.html');
+    final fileData = file.readAsStringSync();
+    var component = parse("<h1>template?<h1>");
+    print(component.outerHtml);
+    return Response.ok(fileData,headers:{});
   }
 }

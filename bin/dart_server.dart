@@ -25,6 +25,9 @@ void main(List<String> arguments) async {
   });
 
   final server = await serve(router.call,HOST,PORT);
+
+  WelcomeController("/");
+
   print("Server running at http://${server.address.host}:${server.port}");
 
   calculate();

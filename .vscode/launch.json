@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "dart-server",
+            "program": "bin/dart_server.dart",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "Dart Tests",
+            "program": "test",
+            "request": "launch",
+            "type": "dart"
+        }
+    ]
+}

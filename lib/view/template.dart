@@ -9,11 +9,67 @@ import 'package:html/parser.dart' as HtmlParser;
 
 const prototypeHTML = 'bin/frontend/template_prototype.html';
 
+enum Command {
+  show,
+  delete,
+  error
+}
+
+class Model {
+  final Map<String,dynamic> data;
+
+  Model(this.data);
+
+  dynamic readModel(String path){
+    List<String> keyPath = path.split(".");
+    dynamic currentValue = data;
+    for (String key in keyPath) {
+      if (currentValue == null) break;
+      currentValue = currentValue[key];
+    }
+    return currentValue;
+  }
+}
+
+
 void spreadElements(Element element){
-  print("${element.localName}");
+  // ignore: no_leading_underscores_for_local_identifiers
+  element.attributes.forEach((_key, value) {
+    var key = _key.toString();
+    if(key.startsWith("*")){
+      final rawCommand = key.substring(1);
+      final command = parseCommand(rawCommand, value,Model({
+        "test":{
+          "result":true
+        }
+        }));
+      print(command);
+    }
+  });
   if(element.children.isNotEmpty){
     element.children.forEach(spreadElements);
   }
+}
+
+Command parseCommand (String command,String arg,Model model){
+
+  dynamic value = model.readModel(arg);
+
+  switch (command) {
+    case "if":
+      if(value is bool && value){
+        return Command.show;
+      }else{
+        return Command.delete;
+      }
+      // break;
+    default:
+      return Command.error;
+  }
+}
+
+void executeCommand(){
+
 }
 
 String parseTemplate(){

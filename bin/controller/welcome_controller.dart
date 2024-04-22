@@ -1,3 +1,5 @@
+import "dart:io";
+
 import "package:dart_server/controller.dart";
 import "package:dart_server/view/template.dart";
 import "package:shelf/shelf.dart";
@@ -12,8 +14,8 @@ class WelcomeController extends Controller {
   WelcomeController.regist(super.url, super.router) : super.regist();
   @override
   Response get(Request request){
-    
-    
-    return Response.ok(parseTemplate(),headers:{"Content-Type":"text/html; charset=utf-8"});
+    final file = File(prototypeHTML);
+    final fileData = file.readAsStringSync();
+    return Response.ok(parseTemplate(fileData),headers:{"Content-Type":"text/html; charset=utf-8"});
   }
 }

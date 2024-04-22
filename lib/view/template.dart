@@ -16,7 +16,7 @@ class Model {
 
   Model(this.data);
 
-  dynamic readModel(String path) {
+  dynamic readData(String path) {
     List<String> keyPath = path.split(".");
     dynamic currentValue = data;
     for (String key in keyPath) {
@@ -27,15 +27,7 @@ class Model {
   }
 }
 
-void spreadElements(Element element) {
-
-  final Model model = Model({
-    "test": {
-      "result": true,
-      "value":"HELLOWORLD"
-    }
-  });
-
+void spreadElements(Element element, Model model) {
   // ignore: no_leading_underscores_for_local_identifiers
   element.attributes.forEach((_key, value) {
     var key = _key.toString();
@@ -46,18 +38,21 @@ void spreadElements(Element element) {
     }
   });
   if (element.localName == "tmp-text") {
-    element.innerHtml = model.readModel(element.innerHtml).toString();
+    element.innerHtml = model.readData(element.innerHtml).toString();
     print(element.innerHtml);
   }
 
   print(element.localName);
+  
   if (element.children.isNotEmpty) {
-    element.children.forEach(spreadElements);
+    for (var element in element.children) {
+      spreadElements(element, model);
+    }
   }
 }
 
 Command parseCommand(String command, String arg, Model model) {
-  dynamic value = model.readModel(arg);
+  dynamic value = model.readData(arg);
 
   switch (command) {
     case "if":
@@ -74,22 +69,15 @@ Command parseCommand(String command, String arg, Model model) {
 
 void executeCommand() {}
 
-String parseTemplate() {
-  final file = File(prototypeHTML);
-  final fileData = file.readAsStringSync();
-  final component = HtmlParser.parse(fileData);
-  //html body h2
+String parseTemplate(String rawHtml) {
+  final component = HtmlParser.parse(rawHtml);
   final html = component.children[0];
-  spreadElements(html);
-  // html.children[1].children[1].attributes.forEach((key, value) {
-  //   key = key.toString();
-  //   print("key : $key value: $value");
 
-  // },);
+  final Model model = Model({
+    "test": {"result": true, "value": "HELLOWORLD"}
+  });
 
-  // print(component);
+  spreadElements(html, model);
 
-  //TODO: make stringify
-  
   return component.outerHtml;
 }

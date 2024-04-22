@@ -2,14 +2,20 @@
 
 //Todo:
 
-import 'dart:io';
+import 'dart:collection';
 import 'package:html/dom.dart';
 // ignore: library_prefixes
 import 'package:html/parser.dart' as HtmlParser;
 
 const prototypeHTML = 'bin/frontend/template_prototype.html';
 
-enum Command { show, delete, error }
+enum CommandMethod { show, delete, error }
+
+class Command {
+  Command(CommandMethod method);
+  late CommandMethod method;
+  dynamic data;
+}
 
 class Model {
   final Map<String, dynamic> data;
@@ -34,16 +40,17 @@ void spreadElements(Element element, Model model) {
     if (key.startsWith("*")) {
       final rawCommand = key.substring(1);
       final command = parseCommand(rawCommand, value, model);
-      print(command);
+      // print(command);
     }
   });
   if (element.localName == "tmp-text") {
     element.innerHtml = model.readData(element.innerHtml).toString();
-    print(element.innerHtml);
+    // print(element.innerHtml);
   }
 
-  print(element.localName);
-  
+  // print(element.localName);
+  print("${element.localName} : ${element.innerHtml}");
+
   if (element.children.isNotEmpty) {
     for (var element in element.children) {
       spreadElements(element, model);
@@ -51,20 +58,35 @@ void spreadElements(Element element, Model model) {
   }
 }
 
-Command parseCommand(String command, String arg, Model model) {
+CommandMethod parseCommand(String command, String arg, Model model) {
   dynamic value = model.readData(arg);
 
   switch (command) {
     case "if":
       if (value is bool && value) {
-        return Command.show;
+        return CommandMethod.show;
       } else {
-        return Command.delete;
+        return CommandMethod.delete;
       }
     // break;
     default:
-      return Command.error;
+      return CommandMethod.error;
   }
+}
+
+Element removeFrangments(Element element){
+  for (var element in element.children) {
+    element.attributes.containsKey("*");
+  }
+  return element;
+}
+
+void readAttributes(LinkedHashMap attributes){
+
+}
+
+abstract class TemplateHTML implements Element {
+  
 }
 
 void executeCommand() {}

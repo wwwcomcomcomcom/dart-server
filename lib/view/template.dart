@@ -50,6 +50,15 @@ extension ElementExtension on Element {
     nodes.remove(this);
     return true;
   }
+  void removeTemplateProps(){
+    final LinkedHashMap<Object,String> newAttributes = LinkedHashMap();
+    // ignore: no_leading_underscores_for_local_identifiers
+    attributes.forEach((_key, value) {
+      final String key = _key.toString();
+      if(!key.startsWith("*")) newAttributes.addAll({key:value});
+    });
+    attributes = newAttributes;
+  }
 }
 
 void spreadElements(Element element, Model model) {
@@ -62,6 +71,7 @@ void spreadElements(Element element, Model model) {
       break;
       default:break;
     }
+    element.removeTemplateProps();
   });
   if (element.localName == "tmp-text") {
     element.replaceToString(model.readData(element.innerHtml).toString());
@@ -112,7 +122,7 @@ String parseTemplate(String rawHtml) {
   final html = component.children[0];
 
   final Model model = Model({
-    "test": {"result": true, "value": "HELLOWORLD"}
+    "test": {"result": true, "value": "HELLOWORLD", "value2":"helloworld","value3":"asdfjioedfs"}
   });
 
   spreadElements(html, model);

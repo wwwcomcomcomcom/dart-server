@@ -13,18 +13,6 @@ final Model model = Model({
     "test": {"result": true, "value": "HELLOWORLD", "value2":"helloworld","value3":"asdfjioedfs"}
 });
 
-enum CommandMethod {
-  show,
-  delete,
-  error
-}
-
-class Command {
-  Command(CommandMethod method);
-  late CommandMethod method;
-  dynamic data;
-}
-
 class Model {
   final Map<String, dynamic> data;
 
@@ -85,22 +73,6 @@ void spreadElements(Element element, Model model) {
     for (var element in element.children) {
       spreadElements(element, model);
     }
-  }
-}
-
-CommandMethod parseCommand(String command, String arg, Model model) {
-  dynamic value = model.readData(arg);
-
-  switch (command) {
-    case "if":
-      if (value is bool && value) {
-        return CommandMethod.show;
-      } else {
-        return CommandMethod.delete;
-      }
-    // break;
-    default:
-      return CommandMethod.error;
   }
 }
 

@@ -6,10 +6,14 @@ import 'dart:collection';
 import 'package:html/dom.dart';
 // ignore: library_prefixes
 import 'package:html/parser.dart' as HtmlParser;
-
+import 'parse_props.dart' as PropParser;
 const prototypeHTML = 'bin/frontend/template_prototype.html';
 
-enum CommandMethod { show, delete, error }
+enum CommandMethod {
+  show,
+  delete,
+  error
+}
 
 class Command {
   Command(CommandMethod method);
@@ -33,23 +37,35 @@ class Model {
   }
 }
 
+extension ElementExtension on Element {
+  bool removeSelf(){
+    if(parent ==  null) return false;
+    parent!.children.remove(this);
+    return true;
+  }
+  bool replaceToString(String string){
+    if(parent ==  null) return false;
+    NodeList nodes = parent!.nodes;
+    nodes[nodes.indexOf(this)] = Text(string);
+    nodes.remove(this);
+    return true;
+  }
+}
+
 void spreadElements(Element element, Model model) {
   // ignore: no_leading_underscores_for_local_identifiers
   element.attributes.forEach((_key, value) {
-    var key = _key.toString();
-    if (key.startsWith("*")) {
-      final rawCommand = key.substring(1);
-      final command = parseCommand(rawCommand, value, model);
-      // print(command);
+    final key = _key.toString();
+    switch (key) {
+      case "*if":
+        PropParser.executeIfProp(element,key,model);
+      break;
+      default:break;
     }
   });
   if (element.localName == "tmp-text") {
-    element.innerHtml = model.readData(element.innerHtml).toString();
-    // print(element.innerHtml);
+    element.replaceToString(model.readData(element.innerHtml).toString());
   }
-
-  // print(element.localName);
-  print("${element.localName} : ${element.innerHtml}");
 
   if (element.children.isNotEmpty) {
     for (var element in element.children) {

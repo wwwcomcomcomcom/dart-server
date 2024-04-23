@@ -6,6 +6,7 @@ import 'dart:collection';
 import 'package:html/dom.dart';
 // ignore: library_prefixes
 import 'package:html/parser.dart' as HtmlParser;
+// ignore: library_prefixes
 import 'parse_props.dart' as PropParser;
 const prototypeHTML = 'bin/frontend/template_prototype.html';
 
@@ -82,16 +83,6 @@ Element removeFrangments(Element element){
   }
   return element;
 }
-
-void readAttributes(LinkedHashMap attributes){
-
-}
-
-abstract class TemplateHTML implements Element {
-  
-}
-
-void executeCommand() {}
 
 String parseTemplate(String rawHtml) {
   final component = HtmlParser.parse(rawHtml);

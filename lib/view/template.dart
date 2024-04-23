@@ -9,6 +9,10 @@ import 'package:html/parser.dart' as HtmlParser;
 import 'parse_props.dart' as PropParser;
 const prototypeHTML = 'bin/frontend/template_prototype.html';
 
+final Model model = Model({
+    "test": {"result": true, "value": "HELLOWORLD", "value2":"helloworld","value3":"asdfjioedfs"}
+});
+
 enum CommandMethod {
   show,
   delete,
@@ -120,11 +124,6 @@ void executeCommand() {}
 String parseTemplate(String rawHtml) {
   final component = HtmlParser.parse(rawHtml);
   final html = component.children[0];
-
-  final Model model = Model({
-    "test": {"result": true, "value": "HELLOWORLD", "value2":"helloworld","value3":"asdfjioedfs"}
-  });
-
   spreadElements(html, model);
 
   return component.outerHtml;

@@ -7,8 +7,8 @@ class Member {
     _id = id;
   }
 
-  late final int _id;
-  late final String _name;
+  late int _id;
+  late String _name;
 
 
   int get id => _id;

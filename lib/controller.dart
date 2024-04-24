@@ -56,4 +56,11 @@ class Controller{
   Response patch(Request request) {
     return Response(HttpStatus.notImplemented);
   }
+
+  Future<Map<String,String>> parseRequestBody(Request request)async{
+    //default content type: x-www-form-urlencoded
+    final String rawData = await request.readAsString();
+    Map<String,String> data = Uri.splitQueryString(rawData);
+    return data;
+  }
 }

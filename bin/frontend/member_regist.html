@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/member" method="post">
+        <div class="form-group">
+            <label for="name">이름</label>
+            <input type="text" name="name" id="name"/>
+        </div>
+        <button type="submit">등록</button>
+    </form>
+    <div class="member-list">
+        <li *foreach="members"><tmp-text>name</tmp-text></li>
+    </div>
+</body>
+</html>

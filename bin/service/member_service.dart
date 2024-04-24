@@ -1,6 +1,5 @@
 import '../model/member.dart';
 import '../repository/member_repo.dart';
-import '../repository/memory_member_repo.dart';
 
 class MemberService {
   late final MemberRepository _memberRepository;

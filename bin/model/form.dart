@@ -3,7 +3,9 @@
 class MemberForm {
   late String _name;
 
-  MemberForm(String name);
+  MemberForm(String name){
+    _name = name;
+  }
 
   String get name => _name;
 

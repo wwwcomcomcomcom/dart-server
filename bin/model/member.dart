@@ -2,7 +2,10 @@
 
 class Member {
 
-  Member(String name,{int id = 0});
+  Member(String name,{int id = 0}){
+    _name = name;
+    _id = id;
+  }
 
   late final int _id;
   late final String _name;

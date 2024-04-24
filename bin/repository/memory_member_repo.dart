@@ -10,20 +10,17 @@ class MemoryMemberRepository implements MemberRepository {
 
   @override
   List<Member> findAll() {
-    // TODO: implement findAll
-    throw UnimplementedError();
+    return _store.values.toList();
   }
   
   @override
   Member? findById(int id) {
-    // TODO: implement findById
-    throw UnimplementedError();
+    return _store[id];
   }
   
   @override
   Member? findByName(String name) {
-    // TODO: implement findByName
-    throw UnimplementedError();
+    return _store.values.where((element) => element.name == name).firstOrNull;
   }
   
   @override
@@ -32,5 +29,5 @@ class MemoryMemberRepository implements MemberRepository {
     _store.addAll({member.id:member});
     return member;
   }
-  
+
 }

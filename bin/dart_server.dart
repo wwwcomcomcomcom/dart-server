@@ -1,6 +1,7 @@
 
 //lib
 import 'package:dart_server/dart_server.dart';
+import 'controller/member_controller.dart';
 import 'controller/welcome_controller.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -18,7 +19,7 @@ void main(List<String> arguments) async {
   //   return Response.ok(fileData,headers:{'Content-Type':"text/html; charset=utf-8"});
   // });
   WelcomeController.regist("/", router);
-
+  MemberController.regist("/member", router);
   final server = await serve(router.call,HOST,PORT);
 
   print("Server running at http://${server.address.host}:${server.port}");

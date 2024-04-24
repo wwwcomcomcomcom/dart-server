@@ -25,35 +25,35 @@ class Controller{
     return Response(HttpStatus.notImplemented);
   }
 
-  Response head() {
+  Response head(Request request) {
     return Response(HttpStatus.notImplemented);
   }
 
-  Response post() {
+  Response post(Request request) {
     return Response(HttpStatus.notImplemented);
   }
 
-  Response put() {
+  Response put(Request request) {
     return Response(HttpStatus.notImplemented);
   }
 
-  Response delete() {
+  Response delete(Request request) {
     return Response(HttpStatus.notImplemented);
   }
 
-  Response connect() {
+  Response connect(Request request) {
     return Response(HttpStatus.notImplemented);
   }
 
-  Response options() {
+  Response options(Request request) {
     return Response(HttpStatus.notImplemented);
   }
 
-  Response trace() {
+  Response trace(Request request) {
     return Response(HttpStatus.notImplemented);
   }
   
-  Response patch() {
+  Response patch(Request request) {
     return Response(HttpStatus.notImplemented);
   }
 }

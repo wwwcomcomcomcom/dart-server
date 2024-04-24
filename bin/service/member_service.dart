@@ -5,7 +5,7 @@ import '../repository/memory_member_repo.dart';
 class MemberService {
   late final MemberRepository _memberRepository;
 
-  MemberService(MemberRepository memberRepository);
+  MemberService(MemberRepository memberRepository){_memberRepository = memberRepository;}
 
   int join(Member member){
     checkDuplicateMember(member);

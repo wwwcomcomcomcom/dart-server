@@ -16,6 +16,6 @@ class WelcomeController extends Controller {
   Response get(Request request){
     final file = File(prototypeHTML);
     final fileData = file.readAsStringSync();
-    return Response.ok(parseTemplate(fileData),headers:{"Content-Type":"text/html; charset=utf-8"});
+    return Response.ok(parseTemplate(fileData,prototypeModel),headers:{"Content-Type":"text/html; charset=utf-8"});
   }
 }

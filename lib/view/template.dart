@@ -3,14 +3,14 @@
 //Todo:
 
 import 'dart:collection';
+import 'dart:html';
 import 'package:html/dom.dart';
 // ignore: library_prefixes
 import 'package:html/parser.dart' as HtmlParser;
 // ignore: library_prefixes
 import 'parse_props.dart' as PropParser;
 const prototypeHTML = 'bin/frontend/template_prototype.html';
-
-final Model model = Model({
+final Model prototypeModel = Model({
     "test": {"result": true, "value": "HELLOWORLD", "value2":"helloworld","value3":"asdfjioedfs"}
 });
 
@@ -62,6 +62,9 @@ void spreadElements(Element element, Model model) {
       case "*if":
         PropParser.executeIfProp(element,key,model);
       break;
+      case "*foreach":
+        PropParser.executeForeachProp(element,key,model);
+      break;
       default:break;
     }
     element.removeTemplateProps();
@@ -84,7 +87,7 @@ Element removeFrangments(Element element){
   return element;
 }
 
-String parseTemplate(String rawHtml) {
+String parseTemplate(String rawHtml,Model model) {
   final component = HtmlParser.parse(rawHtml);
   final html = component.children[0];
   spreadElements(html, model);

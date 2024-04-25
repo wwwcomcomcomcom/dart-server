@@ -20,8 +20,9 @@ class MemberController extends Controller {
   Response get(Request request){
     final file = File("bin/frontend/member_regist.html");
     final fileData = file.readAsStringSync();
+    Model model = Model({"members":_memberService.findMembers()});
     return Response.ok(
-      parseTemplate(fileData),
+      parseTemplate(fileData,model),
       headers:{"Content-Type":"text/html; charset=utf-8"}
     );
   }

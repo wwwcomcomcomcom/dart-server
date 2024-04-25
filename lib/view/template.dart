@@ -3,7 +3,6 @@
 //Todo:
 
 import 'dart:collection';
-import 'dart:html';
 import 'package:html/dom.dart';
 // ignore: library_prefixes
 import 'package:html/parser.dart' as HtmlParser;
@@ -52,6 +51,12 @@ extension ElementExtension on Element {
     });
     attributes = newAttributes;
   }
+  Element removeFrangments(){
+  for (var element in children) {
+    element.attributes.containsKey("*");
+  }
+  return this;
+}
 }
 
 void spreadElements(Element element, Model model) {
@@ -78,13 +83,6 @@ void spreadElements(Element element, Model model) {
       spreadElements(element, model);
     }
   }
-}
-
-Element removeFrangments(Element element){
-  for (var element in element.children) {
-    element.attributes.containsKey("*");
-  }
-  return element;
 }
 
 String parseTemplate(String rawHtml,Model model) {

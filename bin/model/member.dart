@@ -16,4 +16,6 @@ class Member {
 
   String get name => _name;
   set name(String name) => _name = name;
+
+  Map<String,dynamic> toJson() => {'id':id,'name':name};
 }

@@ -1,3 +1,5 @@
+import 'package:dart_server/util.dart';
+
 import '../model/member.dart';
 import '../repository/member_repo.dart';
 
@@ -7,13 +9,16 @@ class MemberService {
   MemberService(MemberRepository memberRepository){_memberRepository = memberRepository;}
 
   int join(Member member){
-    checkDuplicateMember(member);
+    if(isDuplicateMember(member)){
+      member.name = getRandomString(10);
+      print(member.name);
+    }
     _memberRepository.save(member);
     return member.id;
   }
 
-  void checkDuplicateMember(Member member){
-    if(_memberRepository.findByName(member.name) != null) throw Exception("Illegal State Exception");
+  bool isDuplicateMember(Member member){
+    return _memberRepository.findByName(member.name) == null;
   }
 
   List<Member> findMembers(){

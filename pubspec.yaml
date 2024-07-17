@@ -11,8 +11,10 @@ dependencies:
   html: ^0.15.4
   shelf: ^1.4.1
   shelf_router: ^1.1.4
+  super_annotations: ^0.8.2
   # path: ^1.8.0
 
 dev_dependencies:
+  build_runner: ^2.4.9
   lints: ^3.0.0
   test: ^1.24.0
